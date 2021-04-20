@@ -17,18 +17,13 @@ class MainViewModel(private val interactor: Interactor) : ViewModel() {
 
     fun getWeekTemp() : LiveData<List<TempItem>> {
         viewModelScope.launch{
-            try {
-                viewState.postValue(ViewState.Loading)
-                    interactor.getWeekTemp(
-                            onSuccess = {
-                                temperature.postValue(it)
-                                viewState.postValue(ViewState.Success)
-                            },
-                            onFail = { viewState.postValue(ViewState.Error(message = "Internet error connection")) })
-
-            } catch (e: Exception){
-                viewState.postValue(ViewState.Error(message = e.message))
-            }
+            viewState.postValue(ViewState.Loading)
+            interactor.getWeekTemp(
+                    onSuccess = {
+                        temperature.postValue(it)
+                        viewState.postValue(ViewState.Success)
+                    },
+                    onFail = { viewState.postValue(ViewState.Error(message = it?.message)) })
         }
         return temperature
     }

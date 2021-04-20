@@ -7,10 +7,12 @@ import kotlinx.coroutines.withContext
 
 class InteractorImpl(private val repository: MainRepository) : Interactor {
     override suspend fun getWeekTemp(onSuccess: (List<TempItem>) -> Unit, onFail: (Throwable?) -> Unit) {
-        withContext(Dispatchers.IO){
-            repository.getWeekTemp(onSuccess, onFail)
+        return try {
+            withContext(Dispatchers.IO){
+                repository.getWeekTemp(onSuccess, onFail)
+                }
+            } catch (e: Exception){
+            onFail(e)
         }
     }
-
-
 }
