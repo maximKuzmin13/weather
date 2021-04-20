@@ -25,6 +25,7 @@ class MyApp: Application() {
                         repositoies,
                         interactors,
                         viewmodels,
+                        daoModule
                 )
             )
         }

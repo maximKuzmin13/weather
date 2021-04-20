@@ -6,6 +6,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class InteractorImpl(private val repository: MainRepository) : Interactor {
+    override suspend fun insert(temp: List<TempItem>) {
+        withContext(Dispatchers.IO){
+            repository.insert(temp)
+        }
+
+    }
+
     override suspend fun getWeekTemp(onSuccess: (List<TempItem>) -> Unit, onFail: (Throwable?) -> Unit) {
         return try {
             withContext(Dispatchers.IO){

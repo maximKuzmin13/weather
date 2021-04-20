@@ -11,19 +11,22 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(private val interactor: Interactor) : ViewModel() {
 
-    private var temperature = MutableLiveData<List<TempItem>>()
+    var temperature = MutableLiveData<List<TempItem>>()
 
     val viewState = MutableLiveData<ViewState>()
 
     fun getWeekTemp() : LiveData<List<TempItem>> {
         viewModelScope.launch{
             viewState.postValue(ViewState.Loading)
+
             interactor.getWeekTemp(
                     onSuccess = {
                         temperature.postValue(it)
+
                         viewState.postValue(ViewState.Success)
                     },
                     onFail = { viewState.postValue(ViewState.Error(message = it?.message)) })
+            temperature.value?.let { interactor.insert(it) }
         }
         return temperature
     }
