@@ -6,10 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weather.core.ViewState
 import com.example.weather.data.TempItem
-import com.example.weather.domain.MainRepository
+import com.example.weather.domain.Interactor
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val repository: MainRepository) : ViewModel() {
+class MainViewModel(private val interactor: Interactor) : ViewModel() {
 
     private var temperature = MutableLiveData<List<TempItem>>()
 
@@ -19,12 +19,13 @@ class MainViewModel(private val repository: MainRepository) : ViewModel() {
         viewModelScope.launch{
             try {
                 viewState.postValue(ViewState.Loading)
-                repository.getWeekTemp(
-                        onSuccess = {
-                            temperature.postValue(it)
-                            viewState.postValue(ViewState.Success)
-                                    },
-                        onFail = { viewState.postValue(ViewState.Error(message = "Internet error connection")) })
+                    interactor.getWeekTemp(
+                            onSuccess = {
+                                temperature.postValue(it)
+                                viewState.postValue(ViewState.Success)
+                            },
+                            onFail = { viewState.postValue(ViewState.Error(message = "Internet error connection")) })
+
             } catch (e: Exception){
                 viewState.postValue(ViewState.Error(message = e.message))
             }

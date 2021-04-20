@@ -20,10 +20,11 @@ class MyApp: Application() {
 
             modules(
                 listOf(
-                    coreModule,
-                    serviceModule,
-                    repositoies,
-                    viewmodels,
+                        coreModule,
+                        serviceModule,
+                        repositoies,
+                        interactors,
+                        viewmodels,
                 )
             )
         }

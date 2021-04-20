@@ -1,6 +1,8 @@
 package com.example.weather.core
 
+import com.example.weather.data.InteractorImpl
 import com.example.weather.data.MainRepositoryImpl
+import com.example.weather.domain.Interactor
 import com.example.weather.domain.MainApi
 import com.example.weather.domain.MainRepository
 import com.example.weather.presentation.MainViewModel
@@ -41,4 +43,8 @@ val serviceModule = module {
 
 val repositoies = module {
     single<MainRepository> { MainRepositoryImpl(get()) }
+}
+
+val interactors = module {
+    single<Interactor> { InteractorImpl(get()) }
 }

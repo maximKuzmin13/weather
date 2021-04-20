@@ -11,7 +11,7 @@ import retrofit2.Response
 class MainRepositoryImpl( private val api: MainApi): MainRepository {
 
 
-    override suspend fun getWeekTemp(onSuccess: (List<TempItem>) -> Unit,
+    override fun getWeekTemp(onSuccess: (List<TempItem>) -> Unit,
                                      onFail: (Throwable?) -> Unit) {
         val temperatureWrapper = api.list(MyApp.API_KEY, "metric")
 
